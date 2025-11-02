@@ -18,4 +18,8 @@ So, based on requirements I have  created  11 tests.
 3) if error shown in case user leaves email field  empty or email is in wrong format - 3 tests
 4) happy path scenario when all fields are filled correctly and user can proceed further without errors - 1 test.
 
+# Improvements
+It is possible to create config file to store test data like url, valid and invalid zip codes, phone numbers and emails.
+Also possible to create set of data and run them against one test scenario to reduce number of tests.
+
 
