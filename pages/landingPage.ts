@@ -26,12 +26,16 @@ export class LandingPage {
         await errorMessage.waitFor();
     }
 
-    async pickInterests() {
-        await this.page.locator('i').nth(2).click();
+    async pickInterests(interest: string) {
+        // await this.page.locator('i').nth(2).click();
+        await this.page.locator('#form-container-1').getByText(interest).click();
+        //  await page.locator('#form-container-1').getByRole('button', { name: 'Next ' }).click();
+
     }
 
-    async pickTypeOfProperty() {
-        await this.page.locator('#form-container-1').getByText('Owned House / Condo').click();
+
+    async pickTypeOfProperty(propertyType: string ) {
+        await this.page.locator('#form-container-1').getByText(propertyType).click();
     }
 
     async enterName(name: string) {
@@ -45,8 +49,6 @@ export class LandingPage {
     }
 
     async wrongEmailAlertIsShown() {
-      //  const validation=  this.page.locator("//input[@placeholder = 'Enter Your Email']/../../../div/div[@class='helpBlock']").first();
-       // await expect(validation).toBeVisible();
         const msg = await this.page.$eval('input[name="email"]', el => (el as HTMLInputElement).validationMessage);
         expect(msg.length).toBeGreaterThan(0);
 
@@ -57,16 +59,27 @@ export class LandingPage {
             .click()
     }
 
-    async enterPhone() {
-        await this.page.locator('#form-container-1').getByRole('textbox', {name: '(XXX)XXX-XXXX'})
+    async enterPhone(phone: string) {
+        await this.page.locator('#form-container-1').getByRole('textbox', {name: '(XXX)XXX-XXXX'}).fill(phone)
+    }
+
+    async verifyPhoneFieldValue(expectedValue: string) {
+        const phoneField = this.page.locator('#form-container-1').getByRole('textbox', {name: '(XXX)XXX-XXXX'});
+        await expect(phoneField).toHaveValue(expectedValue);
     }
 
     async clickSubmitYourRequestButton() {
-        await this.page.locator('#form-container-1').getByRole('button', {name: 'Submit'})
+        await this.page.locator('#form-container-1').getByRole('button', {name: 'Submit'}).click();
     }
 
     async verifyWhyYouAreInterestedMessageShown() {
         const message = this.page.getByText("Why are you interested in a walk-in tub?").first();
+        await message.waitFor();
+        await (expect(message)).toBeVisible();
+    }
+
+    async verifyThankYouPageShown() {
+        const message = this.page.getByRole('heading', {name: 'Thank you!'})
         await message.waitFor();
         await (expect(message)).toBeVisible();
     }
