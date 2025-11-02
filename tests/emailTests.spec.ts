@@ -21,6 +21,13 @@ test("Error message shown if invalid email entered", async ({page}) => {
     await landingPage.clickGoToEstimate();
     await landingPage.wrongEmailAlertIsShown();
 })
+test("Error message shown if only post server entered in email field", async ({page}) => {
+    await landingPage.enterName("Test Playwright");
+    await landingPage.enterEmail("@gmail.com");
+    await landingPage.clickGoToEstimate();
+    await landingPage.wrongEmailAlertIsShown();
+})
+
 test("Error message shown if email empty", async ({page}) => {
     await landingPage.enterName("Test Playwright");
     await landingPage.enterEmail("");
